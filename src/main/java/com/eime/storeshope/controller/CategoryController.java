@@ -5,7 +5,6 @@ import com.eime.storeshope.model.Category;
 import com.eime.storeshope.response.ApiResponse;
 import com.eime.storeshope.service.category.ICategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,7 @@
 package com.eime.storeshope.service.product;
 
 import com.eime.storeshope.exceptions.ProductNotFoundException;
+import com.eime.storeshope.exceptions.ResourceNotFoundException;
 import com.eime.storeshope.model.Category;
 import com.eime.storeshope.model.Product;
 import com.eime.storeshope.repository.CategoryRepository;
@@ -16,7 +17,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ProductService implements  IProductService {
-
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
@@ -36,7 +36,6 @@ public class ProductService implements  IProductService {
         return productRepository.save(createProduct(request,category));
     }
 
-    
     private Product createProduct(AddProductRequest request, Category category){
         return new Product(
             request.getName(),
@@ -52,14 +51,14 @@ public class ProductService implements  IProductService {
     @Override
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(()-> new ProductNotFoundException("Product Not Found!"));
+                .orElseThrow(()-> new ResourceNotFoundException("Product Not Found!"));
     }
 
     @Override
     public void deleteProductById(Long id) {
         productRepository.findById(id)
                 .ifPresentOrElse(productRepository::delete,
-                        ()-> {throw new ProductNotFoundException("Product Not Found!");});
+                        ()-> {throw new ResourceNotFoundException("Product Not Found!");});
     }
 
     @Override
@@ -67,9 +66,8 @@ public class ProductService implements  IProductService {
         return productRepository.findById(productId)
                 .map(existingProduct -> updateExistingProduct(existingProduct,request))
                 .map(productRepository :: save)
-                .orElseThrow(()-> new ProductNotFoundException("Product not found!"));
+                .orElseThrow(()-> new ResourceNotFoundException("Product not found!"));
     }
-
 
     private Product updateExistingProduct(Product existingProduct, ProductUpdateRequest request){
         existingProduct.setName(request.getName());
@@ -88,27 +86,27 @@ public class ProductService implements  IProductService {
     }
 
     @Override
-    public List<Product> getAllProductsByCategory(String category) {
+    public List<Product> getProductsByCategory(String category) {
         return productRepository.findByCategory(category);
     }
 
     @Override
-    public List<Product> getAllProductsByBrand(String brand) {
+    public List<Product> getProductsByBrand(String brand) {
         return productRepository.findByBrand(brand);
     }
 
     @Override
-    public List<Product> getAllProductsByCategoryAndBrand(String category, String brand) {
+    public List<Product> getProductsByCategoryAndBrand(String category, String brand) {
         return productRepository.findByCategoryAndBrand(category,brand);
     }
 
     @Override
-    public List<Product> getAllProductsByName(String name) {
+    public List<Product> getProductsByName(String name) {
         return productRepository.findByName(name);
     }
 
     @Override
-    public List<Product> getAllProductsByBrandAndName(String brand, String name) {
+    public List<Product> getProductsByBrandAndName(String brand, String name) {
         return productRepository.findByBrandAndName(brand,name);
     }
 

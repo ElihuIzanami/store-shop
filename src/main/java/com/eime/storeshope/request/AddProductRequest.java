@@ -6,11 +6,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
+@Data
 public class AddProductRequest {
 
     private String name;
