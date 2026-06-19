@@ -4,7 +4,6 @@ import com.eime.storeshope.dto.ImageDto;
 import com.eime.storeshope.exceptions.ResourceNotFoundException;
 import com.eime.storeshope.model.Image;
 import com.eime.storeshope.response.ApiResponse;
-import com.eime.storeshope.service.image.IImageService;
 import com.eime.storeshope.service.image.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
@@ -63,7 +62,7 @@ public class ImageController {
     }
 
     @DeleteMapping("/image/{imageId}/delete")
-    public ResponseEntity<ApiResponse> deleteImage(@PathVariable Long imageId {
+    public ResponseEntity<ApiResponse> deleteImage(@PathVariable Long imageId) {
         Image image = imageService.getImageById(imageId);
         try {
             if(image != null) {
